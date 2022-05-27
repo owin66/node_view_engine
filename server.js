@@ -21,9 +21,22 @@ app.get('/contacts', (req, res) => {
     res.sendFile(createPath('contacts')) //путь
 })
 
+app.get('/add-post', (req, res) => {
+    res.sendFile(createPath('add-post')) //путь
+})
+
+app.get('/posts/:id', (req, res) => {
+    res.sendFile(createPath('post')) //путь
+})
+
+app.get('/posts', (req, res) => {
+    res.sendFile(createPath('posts')) //путь
+})
+
 app.get('/about-us', (req, res) => {
     res.redirect('/contacts') // перенаправление
 })
+
 app.use((req,res)=>{
     res
         .status(404) //ошибка
