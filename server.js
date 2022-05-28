@@ -8,7 +8,7 @@ app.set('view engine', 'ejs')
 
 const PORT = 3000;
 
-const createPath = (page) => path.resolve(__dirname, 'views', `${page}.html`)
+const createPath = (page) => path.resolve(__dirname, 'ejs-views', `${page}.ejs`)
 
 //функция перехода путей
 
@@ -17,31 +17,38 @@ app.listen(PORT, (error) => {
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(createPath('index'))//путь
+    const title = 'Home';
+    res.render(createPath('index'), {title})//путь
 })
 
 app.get('/contacts', (req, res) => {
-    res.sendFile(createPath('contacts')) //путь
-})
-
-app.get('/add-post', (req, res) => {
-    res.sendFile(createPath('add-post')) //путь
+    const title = 'Contacts';
+    const contacts = [
+        {name:'YouTube', link:'http://youtube.com/YauhenKavalchuk'},
+        {name:'Twitter', link:'http://github.com/YauhenKavalchuk'},
+        {name:'GitHub', link:'http://twitter.com/YauhenKavalchuk'},
+    ];
+    res.render(createPath('contacts'), {contacts, title}) //путь
 })
 
 app.get('/posts/:id', (req, res) => {
-    res.sendFile(createPath('post')) //путь
+    const title = 'Post';
+    res.render(createPath('post'), {title}) //путь
 })
 
 app.get('/posts', (req, res) => {
-    res.sendFile(createPath('posts')) //путь
+    const title = 'Post';
+    res.render(createPath('posts', {title})) //путь
 })
 
-app.get('/about-us', (req, res) => {
-    res.redirect('/contacts') // перенаправление
+app.get('/add-post', (req, res) => {
+    const title = 'Add post';
+    res.render(createPath('add-post', {title})) //путь
 })
 
 app.use((req,res)=>{
+    const title = 'Error Page';
     res
         .status(404) //ошибка
-        .sendFile(createPath('error'))//перенаправление на ошибку
+        .render(createPath('error', {title}))//перенаправление на ошибку
 })
